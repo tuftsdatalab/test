@@ -1,0 +1,60 @@
+defaults:
+  hidden: false
+root: index
+subtrees:
+  - caption: Command Line Interfaces
+    entries:
+      - file: cli/index
+        title: CLI
+        subtrees:
+          - entries:
+              - glob: cli/*
+  - caption: High-Performance Computing
+    entries:
+      - file: hpc/index
+        title: HPC
+        subtrees:
+          - entries:
+              - glob: hpc/*
+  - caption: Bioinformatics
+    entries:
+      - file: bio/index
+        title: Bioinformatics
+        subtrees:
+          - entries:
+              - glob: bio/*
+  - caption: Python
+    entries:
+      - file: python/index
+        title: Python
+        subtrees:
+          - entries:
+              - glob: python/*
+  - caption: R
+    entries:
+      - file: r/index
+        title: R
+        subtrees:
+          - entries:
+              - glob: r/*
+  - caption: Geographical Information Science and Remote Sensing
+    entries:
+      - file: gis/index
+        title: GIS+RS
+        subtrees:
+          - entries:
+              - glob: gis/*
+  - caption: Digital Humanities and Natural Language Processing
+    entries:
+      - file: nlp/index
+        title: DH+NLP
+        subtrees:
+          - entries:
+              - glob: nlp/*
+  - caption: Statistics
+    entries:
+      - file: stats/index
+        title: Statistics
+        subtrees:
+          - entries:
+              - glob: stats/*
