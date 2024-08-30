@@ -1,7 +1,8 @@
 import os
 import sys
 from datetime import date
-from urllib.parse import urljoin
+
+from pygit2 import GitError, Repository
 
 project = "Tufts RT Guides"
 author = "Tufts University"
@@ -9,6 +10,15 @@ email = "tts-research@tufts.edu"
 
 github_user = "tuftsrt"
 github_repo = "guides"
+
+version = date.today().strftime("%Y%m%d")
+release = "dev"
+
+try:
+    if Repository(".").head.shorthand == "main":
+        release = "pub"
+except GitError:
+    pass
 
 copyright = "{:04} {}".format(date.today().year, author)
 

@@ -9,6 +9,7 @@ dependencies:
   - myst-nb=1.1.1
   - nb-clean=3.3.0
   - pydata-sphinx-theme=0.15.4
+  - pygit2=1.15.1
   - python-frontmatter=1.1.0
   - python=3.10.14
   - r-base=4.1.3
