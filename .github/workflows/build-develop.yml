@@ -9,9 +9,6 @@ jobs:
   build-develop:
     runs-on: ubuntu-latest
     steps:
-      - id: allow-execution
-        run: chmod +x ${{ github.action_path }}/*.sh
-        shell: bash
       - id: checkout-source
         uses: actions/checkout@v4
         with:
@@ -25,20 +22,27 @@ jobs:
           environment-file: repo/environment.yml
           miniforge-version: latest
           use-mamba: true
-      - id: set-variables
+      - id: get-baseurl
         run: |
           url=$(gh api "repos/${{ github.repository }}" --jq ".html_url")
-          echo "BASEURL=${url}" >> "$GITHUB_ENV"
+          echo "BASEURL=${url}" >> "$GITHUB_OUTPUT"
         shell: bash
       - id: build-html
         run: sphinx-build repo/source build/dev
         shell: bash
-      - id: push-changes
-        run: ${{ github.action_path }}/push-changes.sh
+        env:
+          BASEURL: ${{ steps.get-baseurl.outputs.BASEURL }}
+      - id: deploy-changes
+        run: |
+          cd repo
+          git pull --all
+          git config user.name "$(git show -s --format='%an' HEAD)"
+          git config user.email "$(git show -s --format='%ae' HEAD)"
+          git checkout gh-pages -- || git switch --orphan gh-pages
+          rsync -a ../build/ ./
+          git add -A
+          git commit -m "$MESSAGE"
+          git push -u origin gh-pages
         shell: bash
         env:
-          REPO: repo
-          BRANCH: gh-pages
-          CLEAR: false
-          STAGING: build
           MESSAGE: ${{ github.sha }}
