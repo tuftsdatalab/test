@@ -1,0 +1,44 @@
+name: build-main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-main:
+    runs-on: ubuntu-latest
+    steps:
+      - id: allow-execution
+        run: chmod +x ${{ github.action_path }}/*.sh
+        shell: bash
+      - id: checkout-source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: repo
+      - id: configure-environment
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: guides
+          channels: conda-forge
+          environment-file: repo/environment.yml
+          miniforge-version: latest
+          use-mamba: true
+      - id: set-variables
+        run: |
+          url=$(gh api "repos/${{ github.repository }}" --jq ".html_url")
+          echo "BASEURL=${url}" >> "$GITHUB_ENV"
+        shell: bash
+      - id: build-html
+        run: sphinx-build repo/source build
+        shell: bash
+      - id: push-changes
+        run: ${{ github.action_path }}/push-changes.sh
+        shell: bash
+        env:
+          REPO: repo
+          BRANCH: gh-pages
+          CLEAR: false
+          STAGING: build
+          MESSAGE: ${{ github.sha }}
