@@ -28,7 +28,7 @@ jobs:
       - id: get-baseurl
         run: |
           url=$(gh api "repos/${{ github.repository }}" --jq ".html_url")
-          echo "BASEURL=${url}" >> "$GITHUB_OUTPUT"
+          echo "BASEURL=${url}/" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
       - id: build-html
