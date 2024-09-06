@@ -8,6 +8,9 @@ on:
 jobs:
   build-main:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
     steps:
       - id: checkout-source
         uses: actions/checkout@v4
@@ -26,12 +29,10 @@ jobs:
         run: |
           url=$(gh api "repos/${{ github.repository }}" --jq ".html_url")
           echo "BASEURL=${url}" >> "$GITHUB_OUTPUT"
-        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
       - id: build-html
         run: sphinx-build repo/source build
-        shell: bash
         env:
           BASEURL: ${{ steps.get-baseurl.outputs.BASEURL }}
       - id: deploy-changes
@@ -45,6 +46,5 @@ jobs:
           git add -A
           git commit -m "$MESSAGE"
           git push -u origin gh-pages
-        shell: bash
         env:
           MESSAGE: ${{ github.sha }}
