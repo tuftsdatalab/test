@@ -8,11 +8,11 @@ from pygit2 import GitError, Repository
 
 sys.path.append(os.path.abspath("_ext"))
 
-project = "Tufts RT Guides"
+project = "Tufts Data Lab User Guides"
 author = "Tufts University"
-email = "tts-research@tufts.edu"
+email = "datalab-support@elist.tufts.edu"
 
-github_user = "tuftsrt"
+github_user = "tuftsdatalab"
 github_repo = "guides"
 
 dev_label = "dev"

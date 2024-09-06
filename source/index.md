@@ -2,7 +2,7 @@
 html_theme.sidebar_secondary.remove: true
 ---
 
-# Tufts University Research Technology Guides
+# Tufts University Data Lab User Guides
 
 ```{gallery-grid}
 :grid-columns: 1 1 2 3
