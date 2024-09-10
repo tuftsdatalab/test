@@ -1,0 +1,8 @@
+---
+orphan:
+html_theme.sidebar_secondary.remove: true
+---
+
+# 404 Not Found
+
+This page does not seem to exist.
