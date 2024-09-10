@@ -4,6 +4,8 @@ html_theme.sidebar_secondary.remove: true
 
 # Tufts University Data Lab User Guides
 
+This is the development version.
+
 ```{gallery-grid}
 :grid-columns: 1 1 2 3
 
