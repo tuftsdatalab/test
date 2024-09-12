@@ -8,43 +8,14 @@ on:
 jobs:
   build-develop:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash -el {0}
     steps:
-      - id: checkout-source
-        uses: actions/checkout@v4
+      - id: get-url
+        uses: tuftsrt/get-pages-url@develop
+      - id: build-and-deploy
+        uses: truftsrt/deploy-sphinx@develop
         with:
-          ref: develop
-          path: repo
-      - id: configure-environment
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          activate-environment: guides
-          channels: conda-forge
-          environment-file: repo/environment.yml
-          miniforge-version: latest
-          use-mamba: true
-      - id: get-baseurl
-        run: |
-          url=$(gh api "repos/${{ github.repository }}/pages" --jq ".html_url")
-          echo "BASEURL=${url}" >> "$GITHUB_OUTPUT"
+          source-directory: source
+          destination-directory: dev
+          environment-name: guides
         env:
-          GH_TOKEN: ${{ github.token }}
-      - id: build-html
-        run: sphinx-build repo/source build/dev
-        env:
-          BASEURL: ${{ steps.get-baseurl.outputs.BASEURL }}
-      - id: deploy-changes
-        run: |
-          cd repo
-          git pull --all
-          git config user.name "$(git show -s --format='%an' HEAD)"
-          git config user.email "$(git show -s --format='%ae' HEAD)"
-          git checkout gh-pages -- || git switch --orphan gh-pages
-          rsync -a ../build/ ./
-          git add -A
-          git commit -m "$MESSAGE"
-          git push -u origin gh-pages
-        env:
-          MESSAGE: ${{ github.sha }}
+          BASEURL: ${{ steps.get-url.outputs.url }}
