@@ -12,7 +12,7 @@ jobs:
       - id: get-url
         uses: tuftsrt/get-pages-url@develop
       - id: build-and-deploy
-        uses: truftsrt/deploy-sphinx@develop
+        uses: tuftsrt/deploy-sphinx@develop
         with:
           source-directory: source
           destination-directory: dev
