@@ -1,11 +1,11 @@
 [
     {
         "version": "pub",
-        "url": "https://tuftsdatalab.github.io/test/",
+        "url": "https://tuftsdatalab.github.io/test",
         "preferred": true
     },
     {
         "version": "dev",
-        "url": "https://tuftsdatalab.github.io/test/dev/"
+        "url": "https://tuftsdatalab.github.io/dev/"
     }
 ]
